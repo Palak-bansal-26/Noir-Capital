@@ -1,12 +1,34 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Noir Capital Frontend
 
-Currently, two official plugins are available:
+This is the React + Vite frontend for the Noir Capital project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+### 1. Install dependencies
+```
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 2. Configure environment variables
+Create a `.env` file in this directory with the following content:
+```
+VITE_API_URL=http://localhost:5000/api/auth
+```
+This URL should match your backend API URL.
+
+### 3. Start the development server
+```
+npm run dev
+```
+The app will be available at [http://localhost:5173](http://localhost:5173) by default.
+
+## Login Test User
+
+You can log in with the following test credentials (if created in the backend database):
+- **Email:** test@example.com
+- **Password:** 123
+
+## Notes
+- Make sure the backend server is running and accessible at the URL specified in `VITE_API_URL`.
+- If you change the `.env` file, restart the dev server.
