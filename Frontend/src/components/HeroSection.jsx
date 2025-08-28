@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Import useNavigate
+import { useNavigate } from "react-router-dom";
+import newHeroBg from "./hero.png";
+// Correct relative path to hero.png in the same folder
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate(); // 👈 Hook to navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -12,12 +14,23 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  /* 👇 Click event navigates to Contact page */
   const handleContactClick = () => {
-    navigate("/contact"); // 👈 This takes user to Contact page
+    navigate("/contact");
   };
 
   return (
-    <section className={`hero-bg ${isVisible ? "fade-in" : ""}`}>
+    <section
+      className={`hero-bg ${isVisible ? "fade-in" : ""}`}
+      style={{
+        backgroundImage: `url(${newHeroBg})`, // Use imported image here
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "70vh", // Adjust based on design spec
+      }}
+      // Priyanshu (24-Aug-2025): Updated hero section background image
+    >
       <div className="hero-content-container">
         <h1 className="hero-title">
           Founders of <span className="highlight-gold">Noir Capital</span>
