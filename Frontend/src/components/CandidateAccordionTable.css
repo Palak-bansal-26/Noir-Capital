@@ -1,0 +1,111 @@
+.candidate-accordion-table {
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+  border-collapse: collapse;
+  background: #181a20;
+  color: #fff;
+  font-family: inherit;
+}
+.candidate-accordion-table th, .candidate-accordion-table td {
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid #23243a;
+  text-align: left;
+}
+.candidate-accordion-table th {
+  background: #23243a;
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+.name-status-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.candidate-name {
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+.candidate-status {
+  display: inline-block;
+  padding: 0.25rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin-top: 0.1rem;
+}
+.toggle-details-btn {
+  background: #FFC107;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffc10722;
+  transition: background 0.2s;
+}
+.toggle-details-btn:hover {
+  background: #ff9800;
+}
+.details-row td {
+  background: #f8f8f8;
+  padding: 1.2rem 1.2rem;
+}
+.candidate-details-card {
+  background: #fffbe6;
+  border: 1.5px solid #FFC107;
+  border-radius: 10px;
+  padding: 1.2rem 1.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  box-shadow: 0 2px 12px #ffc10722;
+}
+.candidate-detail {
+  font-size: 1rem;
+  color: #23243a;
+}
+.update-btn {
+  background: #43ea7a;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #43ea7a22;
+  transition: background 0.2s;
+}
+.update-btn:hover {
+  background: #2196F3;
+  color: #fff;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(24,26,32,0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 32px #FFC10733;
+  padding: 2rem 1.5rem;
+  position: relative;
+  color: #23243a;
+}
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #FFC107;
+  cursor: pointer;
+}

@@ -63,22 +63,26 @@ const HRDashboard = () => {
   return (
     <div className="hr-dashboard-container">
       <h1>HR Dashboard: Job Applications Overview</h1>
-      <table className="hr-dashboard-table">
+      <table className="hr-dashboard-table" style={{width:'100%',background:'#23243a',borderRadius:'1rem',boxShadow:'0 2px 16px #23243a44',overflow:'hidden',borderCollapse:'separate',borderSpacing:0}}>
         <thead>
-          <tr>
-            <th>Job Title</th>
-            <th>Number of Applicants</th>
-            <th>Actions</th>
+          <tr style={{background:'#181a20',color:'#43ea7a',fontWeight:800,fontSize:'1.08rem'}}>
+            <th style={{padding:'1rem 0.7rem',textAlign:'left'}}>Job Title</th>
+            <th style={{padding:'1rem 0.7rem',textAlign:'center'}}>Number of Applicants</th>
+            <th style={{padding:'1rem 0.7rem',textAlign:'center'}}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {jobApplications.map((job, idx) => (
-            <tr key={idx}>
-              <td>{job.jobTitle}</td>
-              <td>{job.applicants}</td>
-              <td>
-                <button onClick={() => setSelectedJob(job.jobTitle)} className="view-app-btn">
-                  View Applications
+            <tr key={idx} style={{background:idx%2===0?'#23243a':'#181a20',color:'#fff'}}>
+              <td style={{padding:'0.9rem 0.7rem',fontWeight:700,color:'#43ea7a',verticalAlign:'middle'}}>{job.jobTitle}</td>
+              <td style={{padding:'0.9rem 0.7rem',textAlign:'center',fontWeight:600,verticalAlign:'middle'}}>{job.applicants}</td>
+              <td style={{padding:'0.9rem 0.7rem',textAlign:'center',verticalAlign:'middle'}}>
+                <button onClick={() => setSelectedJob(job.jobTitle)} className="view-app-btn" style={{margin:'0 auto',display:'inline-flex',alignItems:'center',gap:'0.5rem',fontWeight:700,fontSize:'1.08rem',letterSpacing:'0.02em',boxShadow:'0 2px 8px #43ea7a22'}}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{verticalAlign: 'middle'}}>
+                    <rect x="3" y="5" width="18" height="14" rx="3" fill="#43ea7a"/>
+                    <path d="M8 11H16M8 15H12" stroke="#23243a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <span>View Applications</span>
                 </button>
               </td>
             </tr>

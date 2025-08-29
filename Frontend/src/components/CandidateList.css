@@ -1,0 +1,56 @@
+.candidate-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background: #181a20;
+  color: #fff;
+  font-family: inherit;
+}
+.candidate-table th, .candidate-table td {
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid #23243a;
+  text-align: left;
+}
+.candidate-table th {
+  background: #23243a;
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+.view-details-btn {
+  background: #FFC107;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffc10722;
+  transition: background 0.2s;
+}
+.view-details-btn:hover {
+  background: #ff9800;
+}
+.details-row td {
+  background: #23243a;
+  padding: 1.2rem 1.2rem;
+}
+.candidate-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.update-btn {
+  background: #43ea7a;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #43ea7a22;
+  transition: background 0.2s;
+}
+.update-btn:hover {
+  background: #2196F3;
+  color: #fff;
+}
