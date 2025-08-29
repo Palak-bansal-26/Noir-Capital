@@ -6,12 +6,13 @@ const ApplyForm = () => {
 
   const [formData, setFormData] = useState({
     name: "",
-    // fatherName: "",
     mobile: "",
     email: "",
     qualification: "",
     resume: null,
   });
+
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,110 +26,184 @@ const ApplyForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Submitted data:", formData);
-    alert("Application submitted!");
+    setShowSuccess(true); // show custom success popup
+    setTimeout(() => setShowSuccess(false), 3000); // hide after 3 sec
   };
 
   return (
-    <div className="p-8 bg-gray-900 min-h-screen text-white">
-      <h1 className="text-2xl font-bold mb-6">
-        Apply for {decodeURIComponent(jobTitle)}
-      </h1>
+    <div className="apply-form-container">
+      <style>{`
+        .apply-form-container {
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #111827;
+          padding: 20px;
+          font-family: Arial, sans-serif;
+          position: relative;
+        }
+        .apply-form-card {
+          background: #1f2937;
+          padding: 30px;
+          border-radius: 12px;
+          max-width: 450px;
+          width: 100%;
+          box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+        .apply-form-title {
+          font-size: 1.8rem;
+          font-weight: bold;
+          color: #ffffff;
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        .apply-form-title span {
+          color: #facc15;
+        }
+        .apply-form {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .apply-form label {
+          display: block;
+          font-size: 0.95rem;
+          margin-bottom: 6px;
+          color: #e5e7eb;
+        }
+        .apply-form input,
+        .apply-form select {
+          width: 100%;
+          padding: 10px 12px;
+          border-radius: 6px;
+          border: 1px solid #d1d5db;
+          font-size: 0.95rem;
+          outline: none;
+          transition: border 0.3s, box-shadow 0.3s;
+        }
+        .apply-form input:focus,
+        .apply-form select:focus {
+          border-color: #facc15;
+          box-shadow: 0 0 5px #facc15;
+        }
+        .apply-form input[type="file"] {
+          background: #ffffff;
+          cursor: pointer;
+          padding: 8px;
+        }
+        .apply-form button {
+          background-color: #facc15;
+          color: #111827;
+          font-weight: bold;
+          padding: 12px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+        .apply-form button:hover {
+          background-color: #eab308;
+        }
 
-      <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+        /* Success Popup */
+        .success-popup {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          background: #22c55e;
+          color: white;
+          padding: 12px 20px;
+          border-radius: 6px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          animation: fadeInOut 3s ease forwards;
+          font-weight: bold;
+        }
 
-        {/* Name */}
-        <div>
-          <label className="block mb-1">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded text-black"
-            required
-          />
-        </div>
+        @keyframes fadeInOut {
+          0% { opacity: 0; transform: translateY(-20px); }
+          10% { opacity: 1; transform: translateY(0); }
+          90% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-20px); }
+        }
+      `}</style>
 
-       
-        {/* <div>
-          <label className="block mb-1">Father’s Name</label>
-          <input
-            type="text"
-            name="fatherName"
-            value={formData.fatherName}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded text-black"
-            required
-          />
-        </div> */}
+      {/* Success Popup */}
+      {showSuccess && (
+        <div className="success-popup">✅ Application submitted successfully!</div>
+      )}
 
-        {/* Mobile Number */}
-        <div>
-          <label className="block mb-1">Mobile Number</label>
-          <input
-            type="tel"
-            name="mobile"
-            pattern="[0-9]{10}"
-            maxLength="10"
-            value={formData.mobile}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded text-black"
-            required
-          />
-        </div>
+      <div className="apply-form-card">
+        <h1 className="apply-form-title">
+          Apply for <span>{decodeURIComponent(jobTitle)}</span>
+        </h1>
 
-        {/* Email */}
-        <div>
-          <label className="block mb-1">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded text-black"
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="apply-form">
+          <div>
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Highest Qualification */}
-        <div>
-          <label className="block mb-1">Highest Qualification</label>
-          <select
-            name="qualification"
-            value={formData.qualification}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded text-black"
-            required
-          >
-            <option value="">-- Select --</option>
-            <option value="10th">10th</option>
-            <option value="12th">12th</option>
-            <option value="Diploma">Diploma</option>
-            <option value="Graduation">Graduation</option>
-            <option value="Post Graduation">Post Graduation</option>
-          </select>
-        </div>
+          <div>
+            <label>Mobile Number</label>
+            <input
+              type="tel"
+              name="mobile"
+              pattern="[0-9]{10}"
+              maxLength="10"
+              value={formData.mobile}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Upload Resume */}
-        <div>
-          <label className="block mb-1">Upload Resume</label>
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
-            className="w-full px-3 py-2 rounded bg-white text-black"
-            required
-          />
-        </div>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white border border-white transition duration-300"
-        >
-          Submit Application
-        </button>
-      </form>
+          <div>
+            <label>Highest Qualification</label>
+            <select
+              name="qualification"
+              value={formData.qualification}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select --</option>
+              <option value="10th">10th</option>
+              <option value="12th">12th</option>
+              <option value="Diploma">Diploma</option>
+              <option value="Graduation">Graduation</option>
+              <option value="Post Graduation">Post Graduation</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Upload Resume</label>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleFileChange}
+              required
+            />
+          </div>
+
+          <button type="submit">Submit Application</button>
+        </form>
+      </div>
     </div>
   );
 };

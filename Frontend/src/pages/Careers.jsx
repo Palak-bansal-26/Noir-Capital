@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import
+import { useNavigate } from "react-router-dom";
 
 const jobs = [
   {
@@ -19,7 +19,7 @@ const jobs = [
     description: `We are a fast-growing investment company passionate about building innovative software solutions...
     You will go through 3 rounds:
     1-Online Assessment
-    2-Technical round(If you qualify assessment round)
+    2-Technical round(If you qualify assessment round).
     3-HR Round(If you qualify GD round)`,
   },
   {
@@ -35,13 +35,13 @@ const jobs = [
 ];
 
 const Careers = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openJob, setOpenJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [submittedSearch, setSubmittedSearch] = useState(""); // for button search
-  const navigate = useNavigate(); // ✅ hook to navigate
+  const [submittedSearch, setSubmittedSearch] = useState("");
+  const navigate = useNavigate();
 
-  const toggleDescription = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
+  const toggleDescription = (jobTitle) => {
+    setOpenJob(openJob === jobTitle ? null : jobTitle);
   };
 
   const handleApplyClick = (jobTitle) => {
@@ -49,11 +49,10 @@ const Careers = () => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault(); // prevent reload
+    e.preventDefault();
     setSubmittedSearch(searchTerm);
   };
 
-  // Filter jobs based on submitted search term
   const filteredJobs = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(submittedSearch.toLowerCase()) ||
@@ -61,47 +60,79 @@ const Careers = () => {
   );
 
   return (
-    <div className="service-card show">
-      <section className="services-hero mb-4">
-        <h1>Join the Revolution at Noir Capital</h1>
-        {/* ✅ Search form with button */}
-        <form onSubmit={handleSearch} className="flex gap-2 mt-4">
-          <input
-            type="text"
-            placeholder="Search jobs by title or location..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 p-2 border rounded bg-transparent text-white placeholder-gray-400"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 border border-white text-white rounded bg-black hover:bg-white hover:text-black transition duration-300"
-          >
-            Search
-          </button>
-        </form>
+    <div className="service-card show px-4 md:px-10 py-6">
+      <section className="services-hero mb-6">
+        <h1 className="text-center text-white text-3xl font-bold mb-4">
+          Join the Revolution at Noir Capital
+        </h1>
+
+        {/* 🔍 Search bar untouched */}
+        <div className="search-bar-container">
+          <form onSubmit={handleSearch} className="search-bar">
+            <input
+              type="text"
+              placeholder="🔍 Search jobs by title or location..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="submit">Search</button>
+          </form>
+        </div>
       </section>
 
       {filteredJobs.length > 0 ? (
-        filteredJobs.map((job, index) => (
+        filteredJobs.map((job) => (
           <div
-            key={index}
-            className="service-card show mb-6 border-b pb-4"
+            key={job.title}
+            className="service-card show mb-6 border-b border-gray-700 pb-4"
           >
             <h2
               className="text-xl font-semibold mb-2 text-white cursor-pointer"
-              onClick={() => toggleDescription(index)}
+              onClick={() => toggleDescription(job.title)}
             >
               {job.title}
             </h2>
 
             <p className="text-sm text-[#ccc] mb-1">📍 {job.location}</p>
 
-            {openIndex === index && (
+            {openJob === job.title && (
               <>
-                <p className="text-[#ddd] whitespace-pre-line mb-4">
-                  {job.description}
-                </p>
+                <div className="border-t border-yellow-600 my-3"></div>
+                {(() => {
+                  const parts = job.description.split(
+                    "You will go through 3 rounds:"
+                  );
+                  const intro = parts[0]?.trim();
+                  const steps = parts[1]
+                    ? parts[1]
+                        .split("\n")
+                        .map((line) => line.trim())
+                        .filter((line) => line !== "")
+                    : [];
+
+                  return (
+                    <>
+                      {intro && (
+                        <p className="job-description mb-3 whitespace-pre-line leading-relaxed">
+                          {intro}
+                        </p>
+                      )}
+
+                      {steps.length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-yellow-400 font-semibold mb-2">
+                            You will go through 3 rounds:
+                          </p>
+                          <ol className="job-steps list-decimal list-inside pl-4">
+                            {steps.map((step, idx) => (
+                              <li key={idx}>{step.replace(/^\d-/, "").trim()}</li>
+                            ))}
+                          </ol>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
 
                 <button
                   className="bg-black text-white px-4 py-2 rounded hover:bg-white hover:text-black border border-white transition duration-300"

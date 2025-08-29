@@ -1,19 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* YOUR EXISTING CSS STARTS BELOW THIS LINE */
+
 /* Buttons */
-button.custom-gold-button {
-  padding: 10px 24px;
-  border: 2px solid var(--gold);
-  background-color: transparent;
-  color: var(--gold);
+/* ApplyButton (styled same as hero buttons) */
+.custom-gold-button {
+  display: inline-block;
+  /* ... rest of your custom button styles ... */
+}
+
+/* ... all your other CSS styles ... */
+/* Buttons */
+/* ApplyButton (styled same as hero buttons) */
+.custom-gold-button {
+  display: inline-block; /* makes <a> behave like button */
+  padding: 12px 32px; /* more breathing space */
+  font-size: 1.1rem;
+  font-weight: 600;
   font-family: 'Inter', sans-serif;
+  color: var(--gold);
+  background-color: transparent;
+  border: 2px solid var(--gold);
+  border-radius: 50px;
   cursor: pointer;
+  text-decoration: none; /* removes underline from <a> */
   transition: all 0.3s ease;
 }
 
-button.custom-gold-button:hover {
+.custom-gold-button:hover {
   background-color: var(--gold);
   color: var(--noir-black);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
+
 
 
 /* Section Spacing */
@@ -1489,4 +1511,93 @@ animation: fadeInLeft 1.2s cubic-bezier(.4,0,.2,1);
     max-width: 98vw;
     padding: 14px 8px 8px 8px;
   }
+}
+
+/* === Careers Search Override === */
+.services-hero form {
+  text-align: left !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+}
+
+.services-hero input,
+.services-hero button {
+  font-size: 1.1rem !important;
+  height: 55px !important;
+}
+/* ---------------- SEARCH BAR ---------------- */
+.search-bar-container {
+  display: flex;
+  justify-content: center; /* center inside hero section */
+  margin-top: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 650px;
+  border: 1px solid rgba(212, 175, 55, 0.5); /* gold border */
+  border-radius: 40px;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.search-bar button {
+  padding: 12px 24px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  background: #d4af37;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-bar button:hover {
+  background: #fff;
+  color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Careers Page Job Description */
+.service-card .job-description {
+  color: #f1f1f1;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.service-card .job-steps {
+  color: #ffffff;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.service-card .job-steps li {
+  margin-bottom: 6px;
 }
