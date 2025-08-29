@@ -1,0 +1,66 @@
+.candidate-accordion-list {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: inherit;
+}
+.candidate-row {
+  margin-bottom: 1.2rem;
+}
+.candidate-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #23243a;
+  color: #fff;
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+}
+.candidate-name {
+  font-weight: 700;
+  font-size: 1.08rem;
+}
+.toggle-details-btn {
+  background: #FFC107;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffc10722;
+  transition: background 0.2s;
+}
+.toggle-details-btn:hover {
+  background: #ff9800;
+}
+.candidate-details-card {
+  background: #f8f8f8;
+  border: 1.5px solid #FFC107;
+  border-radius: 10px;
+  padding: 1.2rem 1.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  box-shadow: 0 2px 12px #ffc10722;
+}
+.candidate-detail {
+  font-size: 1rem;
+  color: #23243a;
+}
+.update-btn {
+  background: #43ea7a;
+  color: #181a20;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #43ea7a22;
+  transition: background 0.2s;
+}
+.update-btn:hover {
+  background: #2196F3;
+  color: #fff;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CandidateAccordionList from '../components/CandidateAccordionList';
 
 // Dummy applicants data for demonstration
 const applicantsData = {
@@ -60,104 +61,99 @@ const applicantsData = {
 
 const ResumeModal = ({ candidate, onClose }) => (
   <div className="modal-overlay">
-    <div className="modal-content">
-      <h2>Resume for {candidate.name}</h2>
-      <button className="modal-close" onClick={onClose}>X</button>
-      <p><strong>Email:</strong> {candidate.email}</p>
-      <p><strong>Phone:</strong> {candidate.phone}</p>
-      <p><strong>Applied Role:</strong> {candidate.role}</p>
-      <p><strong>Resume Preview:</strong></p>
-      <div style={{background:'#181818',padding:'1rem',borderRadius:'8px',marginBottom:'1rem'}}>Simulated resume preview or download link here.</div>
-      <a href={candidate.resumeUrl || '#'} target="_blank" rel="noopener noreferrer" className="view-app-btn">Download Resume</a>
+  <div className="modal-content" style={{maxWidth:'420px',background:'#181a20',boxShadow:'0 6px 32px #FFC10733'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1rem'}}>
+  <h2 style={{fontWeight:800,fontSize:'1.3rem',color:'#fff',letterSpacing:'0.02em'}}>Resume for {candidate.name}</h2>
+        <button className="modal-close" onClick={onClose} style={{background:'none',border:'none',fontSize:'1.2rem',color:'#fff',cursor:'pointer'}}>×</button>
+      </div>
+  <div style={{background:'#181a20',padding:'1rem',borderRadius:'10px',marginBottom:'1rem',color:'#fff',boxShadow:'0 2px 12px #23243a22'}}>
+        <p style={{marginBottom:'0.5rem'}}><strong>Email:</strong> {candidate.email}</p>
+        <p style={{marginBottom:'0.5rem'}}><strong>Phone:</strong> {candidate.phone}</p>
+        <p style={{marginBottom:'0.5rem'}}><strong>Applied Role:</strong> {candidate.role}</p>
+        <p style={{marginBottom:'0.5rem'}}><strong>Resume Preview:</strong></p>
+        <div style={{background:'#23243a',padding:'0.7rem',borderRadius:'6px',marginBottom:'0.7rem',color:'#43ea7a',fontWeight:600,fontSize:'0.98rem'}}>Simulated resume preview or download link here.</div>
+        <a href={candidate.resumeUrl || '#'} target="_blank" rel="noopener noreferrer" className="view-app-btn" style={{width:'100%',display:'block',textAlign:'center',marginTop:'0.5rem',fontWeight:700,letterSpacing:'0.02em'}}>Download Resume</a>
+      </div>
     </div>
   </div>
 );
 
+const HeaderWithClose = ({ heading, onClose }) => (
+  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%',paddingBottom:'0.5rem',marginBottom:'1rem',background:'#181a20',borderBottom:'2px solid #23243a'}}>
+    <h2 style={{fontWeight:800,fontSize:'1.25rem',color:'#43ea7a',letterSpacing:'0.02em',margin:0}}>{heading}</h2>
+    <button onClick={onClose} style={{background:'none',border:'none',fontSize:'1.2rem',color:'#43ea7a',cursor:'pointer',marginLeft:'1.5rem'}}>×</button>
+  </div>
+);
+
 const JobApplicationsModal = ({ jobTitle, onClose }) => {
+  const [feedbackModal, setFeedbackModal] = useState(null);
   const applicants = applicantsData[jobTitle] || [];
-  // const [scheduleFor, setScheduleFor] = useState(null);
   const [resumeFor, setResumeFor] = useState(null);
-  // const handleSchedule = (candidate, interview) => {
-  //   // In a real app, update backend or state here
-  //   alert(`Interview scheduled for ${candidate.name} on ${interview.date} at ${interview.time} with ${interview.interviewer}`);
-  //   setScheduleFor(null);
-  // };
+  const [roundUpdateFor, setRoundUpdateFor] = useState(null);
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>Applications for {jobTitle}</h2>
-        <button className="modal-close" onClick={onClose}>X</button>
+      <div className="modal-content" style={{maxHeight:'80vh',overflowY:'auto',background:'#181a20',color:'#fff',borderRadius:'12px',boxShadow:'0 6px 32px #43ea7a33',padding:'2rem 1.5rem',position:'relative'}}>
+        <HeaderWithClose heading={`Applications for ${jobTitle}`} onClose={onClose} />
         {applicants.length === 0 ? (
           <p>No applications found for this job.</p>
         ) : (
-          <table className="modal-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Applied Role</th>
-                <th>Applied On</th>
-                <th>Source</th>
-                <th>Status</th>
-                <th>Interviewer</th>
-                <th>Interview History</th>
-                <th>Feedback / Notes</th>
-                {/* <th>Schedule</th> */}
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {applicants.map((app, idx) => (
-                <tr key={idx}>
-                  <td>{app.name}</td>
-                  <td>{app.email}</td>
-                  <td>{app.phone}</td>
-                  <td>{app.role}</td>
-                  <td>{app.appliedOn}</td>
-                  <td>{app.source}</td>
-                  <td>{app.status}</td>
-                  <td>{app.interviewer || '-'}</td>
-                  <td>
-                    {app.interviewHistory && app.interviewHistory.length > 0 ? (
-                      <ul style={{margin:0, padding:0, listStyle:'none'}}>
-                        {app.interviewHistory.map((round, i) => (
-                          <li key={i}>
-                            <strong>{round.round}</strong> ({round.date})<br/>
-                            Interviewer: {round.interviewer}<br/>
-                            Feedback: {round.feedback}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : '-'}
-                  </td>
-                  <td>{app.feedback || '-'}</td>
-                  {/* <td>
-                    <button className="view-app-btn" onClick={() => setScheduleFor(app)}>
-                      Schedule
-                    </button>
-                  </td> */}
-                  <td>
-                    <button className="view-app-btn" onClick={() => setResumeFor(app)}>
-                      View Resume
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <CandidateAccordionList candidates={applicants} />
         )}
-        {/*
-        {scheduleFor && (
-          <ScheduleInterviewModal
-            candidate={scheduleFor}
-            onClose={() => setScheduleFor(null)}
-            onSchedule={interview => handleSchedule(scheduleFor, interview)}
-          />
-        )}
-        */}
         {resumeFor && (
           <ResumeModal candidate={resumeFor} onClose={() => setResumeFor(null)} />
+        )}
+        {roundUpdateFor && (
+          <div className="modal-overlay">
+            <div className="modal-content" style={{maxWidth:'520px',background:'#181a20',boxShadow:'0 6px 32px #FFC10733'}}>
+              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1rem'}}>
+                <h2 style={{fontWeight:900,fontSize:'1.45rem',color:'#fff !important',letterSpacing:'0.04em',textShadow:'0 2px 12px #181a20cc',margin:'0',padding:'0.2rem 0',borderBottom:'2px solid #43ea7a',background:'#23243a',borderRadius:'8px 8px 0 0',boxShadow:'0 2px 8px #43ea7a22'}}>Update Rounds for <span style={{color:'#fff !important'}}>{roundUpdateFor.name}</span></h2>
+                <button className="modal-close" onClick={() => setRoundUpdateFor(null)} style={{background:'none',border:'none',fontSize:'1.2rem',color:'#fff',cursor:'pointer'}}>×</button>
+              </div>
+              <div style={{background:'#181a20',padding:'1rem',borderRadius:'10px',boxShadow:'0 2px 12px #23243a22',color:'#fff !important'}}>
+                <form onSubmit={e => {e.preventDefault(); alert('Round updated!'); setRoundUpdateFor(null);}}>
+                  <label style={{display:'block',marginBottom:'0.7rem',color:'#fff',fontWeight:600}}>Round Name:
+                    <input type="text" defaultValue={roundUpdateFor.interviewHistory?.slice(-1)[0]?.round || ''} style={{marginLeft:'0.5rem',padding:'0.4rem',borderRadius:'6px',border:'1.5px solid #fff',background:'#23243a',color:'#fff',fontWeight:500}} />
+                  </label>
+                  <label style={{display:'block',marginBottom:'0.7rem',color:'#fff',fontWeight:600}}>Date:
+                    <input type="date" style={{marginLeft:'0.5rem',padding:'0.4rem',borderRadius:'6px',border:'1.5px solid #fff',background:'#23243a',color:'#fff',fontWeight:500}} />
+                  </label>
+                  <label style={{display:'block',marginBottom:'0.7rem',color:'#fff',fontWeight:600}}>Interviewer:
+                    <input type="text" defaultValue={roundUpdateFor.interviewer || ''} style={{marginLeft:'0.5rem',padding:'0.4rem',borderRadius:'6px',border:'1.5px solid #fff',background:'#23243a',color:'#fff',fontWeight:500}} />
+                  </label>
+                  <label style={{display:'block',marginBottom:'0.7rem',color:'#fff',fontWeight:600}}>Feedback:
+                    <input type="text" defaultValue={roundUpdateFor.feedback || ''} style={{marginLeft:'0.5rem',padding:'0.4rem',borderRadius:'6px',border:'1.5px solid #fff',background:'#23243a',color:'#fff',fontWeight:500}} />
+                  </label>
+                  <button type="submit" className="view-app-btn" style={{background:'#43ea7a',color:'#181a20',marginTop:'1rem',width:'100%',fontWeight:700,letterSpacing:'0.02em',boxShadow:'0 2px 8px #43ea7a22'}}>
+                    <span style={{display:'inline-flex',alignItems:'center',gap:'0.4rem',justifyContent:'center'}}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{verticalAlign:'middle'}}>
+                        <rect x="3" y="5" width="18" height="14" rx="3" fill="#181a20"/>
+                        <path d="M8 11H16M8 15H12" stroke="#43ea7a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span style={{fontWeight:700,fontSize:'1.01rem',letterSpacing:'0.01em'}}>Save</span>
+                    </span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+        {feedbackModal && (
+          <div className="modal-overlay">
+            <div className="modal-content" style={{maxWidth:'400px',background:'#181a20',color:'#fff',borderRadius:'12px',boxShadow:'0 6px 32px #FFC10733',padding:'2rem 1.5rem',position:'relative'}}>
+              <button className="modal-close" onClick={() => setFeedbackModal(null)} style={{position:'absolute',top:'1rem',right:'1rem',background:'none',border:'none',fontSize:'1.2rem',color:'#FFC107',cursor:'pointer'}}>×</button>
+              <h2 style={{fontWeight:800,fontSize:'1.2rem',color:'#FFC107',marginBottom:'1rem'}}>Feedback Details</h2>
+              <div style={{marginBottom:'1rem'}}>
+                <strong>Candidate:</strong> {feedbackModal.app.name}<br/>
+                <strong>Role:</strong> {feedbackModal.app.role}<br/>
+                <strong>Round:</strong> {feedbackModal.round.round}<br/>
+                <strong>Date:</strong> {feedbackModal.round.date}<br/>
+                <strong>Interviewer:</strong> {feedbackModal.round.interviewer}
+              </div>
+              <div style={{background:'#23243a',padding:'1rem',borderRadius:'8px',color:'#FFC107',fontWeight:600}}>
+                {feedbackModal.round.feedback}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
