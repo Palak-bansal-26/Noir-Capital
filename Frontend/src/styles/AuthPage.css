@@ -187,19 +187,17 @@
   text-align: center;
   margin-bottom: 1.5rem;
 }
+
 .logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  font-size: 2.1rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.08em;
-  margin: 0 2rem 0 0;
-  padding: 0;
-  text-shadow: 0 2px 12px #fff8;
-  cursor: pointer;
+  height: 80px;          /* adjust logo height */
+  width: auto;           /* keep aspect ratio */
+  margin: 0 auto 1.5rem auto;
+  display: block;        /* center inside parent */
+  object-fit: contain;   /* prevent distortion */
+  border-radius: 8px;    /* optional: smooth corners */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5); /* optional: glow on dark bg */
 }
+
 
 /* Card */
 .auth-card {

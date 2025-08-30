@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import newHeroBg from "./hero.png";
+import newHeroBg from "./bg3.jpg";
 // Correct relative path to hero.png in the same folder
 
 const HeroSection = () => {
@@ -29,7 +29,7 @@ const HeroSection = () => {
         backgroundRepeat: "no-repeat",
         minHeight: "70vh", // Adjust based on design spec
       }}
-      // Priyanshu (24-Aug-2025): Updated hero section background image
+      // Priyanshu verma (30-Aug-2025): Updated hero section background image
     >
       <div className="hero-content-container">
         <h1 className="hero-title">
