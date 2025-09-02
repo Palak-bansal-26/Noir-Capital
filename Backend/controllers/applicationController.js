@@ -86,3 +86,28 @@ exports.applyForJob = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
+//updating application round
+exports.updateApplicationRound = async (req, res) => {
+  try {
+    const application = await Application.findById(req.params.id);
+    if (!application) {
+      return res.status(404).json({ message: 'Application not found' });
+    }
+
+    // Append the new round to interviewHistory
+    application.interviewHistory.push(req.body);
+
+    // Optionally update interviewer, feedback, or status fields
+    application.interviewer = req.body.interviewer;
+    application.feedback = req.body.feedback;
+    application.status = req.body.status || application.status;
+
+    await application.save();
+    res.status(200).json(application);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to update application round' });
+  }
+};
+

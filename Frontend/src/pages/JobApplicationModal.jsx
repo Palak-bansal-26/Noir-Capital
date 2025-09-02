@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CandidateAccordionList from '../components/CandidateAccordionList';
+import { fetchApplicantsByJob, updateApplicationStatus } from '../services/applicationService';
+
 
 // Dummy applicants data for demonstration
 const applicantsData = {
@@ -85,11 +87,64 @@ const HeaderWithClose = ({ heading, onClose }) => (
   </div>
 );
 
-const JobApplicationsModal = ({ jobTitle, onClose }) => {
+const JobApplicationsModal = ({jobId, jobTitle, onClose }) => {
   const [feedbackModal, setFeedbackModal] = useState(null);
-  const applicants = applicantsData[jobTitle] || [];
+ const [applicants, setApplicants] = useState([]); // start with empty array
   const [resumeFor, setResumeFor] = useState(null);
   const [roundUpdateFor, setRoundUpdateFor] = useState(null);
+
+  /// ✅ Fetch applicants from backend on load
+useEffect(() => {
+    if (!jobId) return; // prevent fetching if no jobId
+
+    const fetchApplicants = async () => {
+      try {
+        const { data } = await fetchApplicantsByJob(jobId); // ✅ uses jobId
+        setApplicants(data);
+      } catch (error) {
+        console.error('Error fetching applications:', error);
+        alert('Failed to fetch applications. Please try again.');
+      }
+    };
+
+    fetchApplicants();
+  }, [jobId]);
+
+
+   // ✅ Handle round update form submission
+const handleRoundUpdate = async (e) => {
+  e.preventDefault();
+
+  // Collect form data
+  const formData = new FormData(e.target);
+  const roundData = {
+    round: formData.get("round"),
+    date: formData.get("date"),
+    interviewer: formData.get("interviewer"),
+    feedback: formData.get("feedback"),
+  };
+
+  try {
+    // 1️⃣ Update round in backend using candidate's ID
+    await updateInterviewRound(roundUpdateFor._id, roundData);
+
+    // 2️⃣ Refetch applicants for this job using jobId
+    if (jobId) {
+      const { data } = await fetchApplicantsByJob(jobId); // ✅ use jobId instead of jobTitle
+      setApplicants(data); // 3️⃣ Update state
+    }
+
+    // 4️⃣ Close the round update modal
+    setRoundUpdateFor(null);
+
+    alert("Round updated successfully!");
+  } catch (err) {
+    console.error("Failed to update round:", err);
+    alert("Error updating round. Please try again.");
+  }
+};
+
+  
   return (
     <div className="modal-overlay">
       <div className="modal-content" style={{maxHeight:'80vh',overflowY:'auto',background:'#181a20',color:'#fff',borderRadius:'12px',boxShadow:'0 6px 32px #43ea7a33',padding:'2rem 1.5rem',position:'relative'}}>
