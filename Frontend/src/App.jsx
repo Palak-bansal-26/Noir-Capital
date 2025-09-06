@@ -65,6 +65,12 @@ const AuthProvider = ({ children }) => {
       const res = await fetchUserProfile();
       const userData = res.data.data;
       setUser(userData);
+      // Redirect only HR users to HR Dashboard after login
+      if (userData?.role === 'hr') {
+        navigate('/hr-dashboard');
+      } else {
+        navigate('/');
+      }
       return userData;
     } catch (error) {
       console.error("Failed to fetch profile on login", error);
