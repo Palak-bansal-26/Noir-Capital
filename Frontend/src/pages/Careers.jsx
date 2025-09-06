@@ -1,44 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const jobs = [
-  {
-    title: "Cybersecurity Analyst",
-    location: "Hyderabad | Bengaluru | Chennai | Mumbai",
-    experience: "..",
-    description: `We have an opportunity to shape your career and provide a journey where your passion for cybersecurity meets real-world impact...
-    You will go through 3 rounds:
-    1-Online Assessment
-    2-Technical round(If you qualify assessment round)
-    3-HR Round(If you qualify GD round)`,
-  },
-  {
-    title: "Junior Software Engineer (Fresher)",
-    location: "Hyderabad, Bengaluru, Chennai, Mumbai",
-    experience: "..",
-    description: `We are a fast-growing investment company passionate about building innovative software solutions...
-    You will go through 3 rounds:
-    1-Online Assessment
-    2-Technical round(If you qualify assessment round).
-    3-HR Round(If you qualify GD round)`,
-  },
-  {
-    title: "Frontend Engineer (Fresher)",
-    location: "Hyderabad | Bengaluru | Chennai | Mumbai",
-    experience: "..",
-    description: `As a Junior Software Engineer, you’ll be part of a fast-paced development team delivering innovative software solutions...
-    You will go through 3 rounds:
-    1-Online Assessment
-    2-Technical round(If you qualify assessment round)
-    3-HR Round(If you qualify GD round)`,
-  },
-];
 
 const Careers = () => {
   const [openJob, setOpenJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
+  const [jobs, setJobs] = useState([]);       // jobs from DB
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  // Fetch jobs from backend
+  useEffect(() => {
+    fetch("http://localhost:5000/api/jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        setJobs(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching jobs:", err);
+        setLoading(false);
+      });
+  }, []);
 
   const toggleDescription = (jobTitle) => {
     setOpenJob(openJob === jobTitle ? null : jobTitle);
@@ -66,7 +49,7 @@ const Careers = () => {
           Join the Revolution at Noir Capital
         </h1>
 
-        {/* 🔍 Search bar untouched */}
+        {/* 🔍 Search bar */}
         <div className="search-bar-container">
           <form onSubmit={handleSearch} className="search-bar">
             <input
@@ -80,10 +63,12 @@ const Careers = () => {
         </div>
       </section>
 
-      {filteredJobs.length > 0 ? (
+      {loading ? (
+        <p className="text-[#ccc]">Loading jobs...</p>
+      ) : filteredJobs.length > 0 ? (
         filteredJobs.map((job) => (
           <div
-            key={job.title}
+            key={job._id}
             className="service-card show mb-6 border-b border-gray-700 pb-4"
           >
             <h2
@@ -98,41 +83,10 @@ const Careers = () => {
             {openJob === job.title && (
               <>
                 <div className="border-t border-yellow-600 my-3"></div>
-                {(() => {
-                  const parts = job.description.split(
-                    "You will go through 3 rounds:"
-                  );
-                  const intro = parts[0]?.trim();
-                  const steps = parts[1]
-                    ? parts[1]
-                        .split("\n")
-                        .map((line) => line.trim())
-                        .filter((line) => line !== "")
-                    : [];
 
-                  return (
-                    <>
-                      {intro && (
-                        <p className="job-description mb-3 whitespace-pre-line leading-relaxed">
-                          {intro}
-                        </p>
-                      )}
-
-                      {steps.length > 0 && (
-                        <div className="mb-4">
-                          <p className="text-yellow-400 font-semibold mb-2">
-                            You will go through 3 rounds:
-                          </p>
-                          <ol className="job-steps list-decimal list-inside pl-4">
-                            {steps.map((step, idx) => (
-                              <li key={idx}>{step.replace(/^\d-/, "").trim()}</li>
-                            ))}
-                          </ol>
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
+                <p className="job-description mb-3 whitespace-pre-line leading-relaxed">
+                  {job.description}
+                </p>
 
                 <button
                   className="bg-black text-white px-4 py-2 rounded hover:bg-white hover:text-black border border-white transition duration-300"

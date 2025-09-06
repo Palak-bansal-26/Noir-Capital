@@ -23,12 +23,45 @@ const ApplyForm = () => {
     setFormData((prev) => ({ ...prev, resume: e.target.files[0] }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted data:", formData);
-    setShowSuccess(true); // show custom success popup
-    setTimeout(() => setShowSuccess(false), 3000); // hide after 3 sec
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // token stored when user logs in
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("You need to be logged in to apply.");
+    return;
+  }
+
+  const formDataToSend = new FormData();
+  formDataToSend.append("jobTitle", decodeURIComponent(jobTitle)); // or jobId if you prefer
+  formDataToSend.append("qualification", formData.qualification);
+  formDataToSend.append("resume", formData.resume);
+
+  try {
+    const response = await fetch("http://localhost:5000/api/applications", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formDataToSend,
+    });
+
+    if (response.ok) {
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+      setFormData({ name: "", mobile: "", email: "", qualification: "", resume: null });
+    } else {
+      const errorBody = await response.json().catch(() => ({}));
+      console.error("Failed to submit application:", errorBody);
+      alert(errorBody.message || "Failed to submit application");
+    }
+  } catch (err) {
+    console.error("Network error:", err);
+    alert("Network error while submitting application");
+  }
+};
+
 
   return (
     <div className="apply-form-container">

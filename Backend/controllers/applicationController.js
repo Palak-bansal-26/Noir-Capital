@@ -1,9 +1,10 @@
 const Application = require("../models/Application");
 const Job = require("../models/Job");
 
-// =====================
-// Get all applications for logged-in user
-// =====================
+/**
+ * GET /api/applications
+ * Returns applications for the logged-in user
+ */
 exports.getUserApplications = async (req, res) => {
   try {
     const applications = await Application.find({ userId: req.user.id })
@@ -13,7 +14,7 @@ exports.getUserApplications = async (req, res) => {
       return res.status(200).json({ message: "No applications found", applications: [] });
     }
 
-    const result = applications.map(app => {
+    const result = applications.map((app) => {
       const totalRounds = app.totalRounds || app.jobId?.totalRounds || 4;
       const roundsCompleted = app.roundsCompleted || 0;
       const progress = Math.round((roundsCompleted / totalRounds) * 100);
@@ -28,6 +29,8 @@ exports.getUserApplications = async (req, res) => {
         totalRounds,
         progress,
         status: app.status || (progress === 100 ? "Completed" : "In Progress"),
+        qualification: app.qualification,
+        resumeUrl: app.resumeUrl,
         appliedAt: app.appliedAt,
       };
     });
@@ -39,37 +42,46 @@ exports.getUserApplications = async (req, res) => {
   }
 };
 
-// =====================
-// Apply for a Job
-// =====================
+/**
+ * POST /api/applications
+ * Apply for a job (login required)
+ * Accepts multipart/form-data: jobTitle (or jobId), qualification, resume(file)
+ */
 exports.applyForJob = async (req, res) => {
   try {
-    const { jobId } = req.body;
+    const { jobTitle, jobId, qualification } = req.body;
 
-    if (!jobId) {
-      return res.status(400).json({ message: "Job ID is required" });
+    // resume was uploaded by multer and is at req.file
+    if (!qualification || !req.file) {
+      return res.status(400).json({ message: "Qualification and resume are required" });
     }
 
-    // Check if job exists
-    const job = await Job.findById(jobId);
+    // Find job: prefer jobId if provided, else try jobTitle
+    let job;
+    if (jobId) {
+      job = await Job.findById(jobId);
+    } else if (jobTitle) {
+      job = await Job.findOne({ title: jobTitle });
+    }
+
     if (!job) {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    // Check if user already applied for this job
-    const existingApp = await Application.findOne({
+    // Prevent duplicate applications by this user for this job
+    const existing = await Application.findOne({
       userId: req.user.id,
-      jobId: jobId,
+      jobId: job._id,
     });
-
-    if (existingApp) {
+    if (existing) {
       return res.status(400).json({ message: "You have already applied for this job" });
     }
 
-    // Create new application
     const application = new Application({
       userId: req.user.id,
-      jobId,
+      jobId: job._id,
+      qualification,
+      resumeUrl: `/uploads/resumes/${req.file.filename}`,
       roundsCompleted: 0,
       totalRounds: job.totalRounds || 4,
       status: "In Progress",
@@ -77,37 +89,9 @@ exports.applyForJob = async (req, res) => {
 
     await application.save();
 
-    res.status(201).json({
-      message: "Application submitted successfully",
-      application,
-    });
+    res.status(201).json({ message: "Application submitted successfully", application });
   } catch (error) {
     console.error("❌ Error in applyForJob:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
-
-//updating application round
-exports.updateApplicationRound = async (req, res) => {
-  try {
-    const application = await Application.findById(req.params.id);
-    if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
-
-    // Append the new round to interviewHistory
-    application.interviewHistory.push(req.body);
-
-    // Optionally update interviewer, feedback, or status fields
-    application.interviewer = req.body.interviewer;
-    application.feedback = req.body.feedback;
-    application.status = req.body.status || application.status;
-
-    await application.save();
-    res.status(200).json(application);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Failed to update application round' });
-  }
-};
-

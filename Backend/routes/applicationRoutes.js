@@ -1,18 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const { getUserApplications, applyForJob , updateApplicationRound} = require("../controllers/applicationController");
-const { protect } = require("../middleware/authMiddleware"); // use real middleware
+const multer = require("multer");
+const path = require("path");
+const { getUserApplications, applyForJob } = require("../controllers/applicationController");
+const { protect } = require("../middleware/authMiddleware");
 
-// ✅ Use protect middleware to decode JWT and attach user
+// ensure uploads/resumes exists
+const fs = require("fs");
+const resumesDir = path.join(process.cwd(), "uploads", "resumes");
+fs.mkdirSync(resumesDir, { recursive: true });
+
+// configure multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, resumesDir),
+  filename: (req, file, cb) => {
+    const safeName = file.originalname.replace(/[^a-zA-Z0-9.\\-_]/g, "_");
+    cb(null, `${Date.now()}-${safeName}`);
+  },
+});
+const upload = multer({ storage });
+
+// protect all application routes (login required)
 router.use(protect);
 
-// GET /api/applications → Get all applications for logged-in user
 router.get("/", getUserApplications);
-
-// POST /api/applications→ Apply for a job
-router.post("/", applyForJob);
-
-// PATCH /api/applications/:id/update-round
-router.patch('/:id/update-round', updateApplicationRound);
+router.post("/", upload.single("resume"), applyForJob);
 
 module.exports = router;
