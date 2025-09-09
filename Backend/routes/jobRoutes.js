@@ -9,4 +9,5 @@ router.get("/", jobController.getJobs);
 // Create job → only admin/HR
 router.post("/", protect, authorize("admin", "hr"), jobController.createJob);
 
+
 module.exports = router;

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const { getUserApplications, applyForJob } = require("../controllers/applicationController");
-const { protect } = require("../middleware/authMiddleware");
+const { getApplicationsByJob,getAllApplications, getUserApplications, applyForJob } = require("../controllers/applicationController");
+const { protect, authorize } = require("../middleware/authMiddleware");
+
 
 // ensure uploads/resumes exists
 const fs = require("fs");
@@ -23,7 +24,13 @@ const upload = multer({ storage });
 // protect all application routes (login required)
 router.use(protect);
 
-router.get("/", getUserApplications);
+router.get("/user", getUserApplications);
 router.post("/", upload.single("resume"), applyForJob);
+
+// All applications (HR/Admin)
+router.get("/all", protect, getAllApplications);
+
+// Applications for a specific job
+router.get("/job/:jobId", protect, getApplicationsByJob);
 
 module.exports = router;

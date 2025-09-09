@@ -1,65 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import CandidateAccordionList from '../components/CandidateAccordionList';
-import { fetchApplicantsByJob, updateApplicationStatus } from '../services/applicationService';
+import { fetchApplicantsByJob, updateInterviewRound, updateApplicationStatus } from '../services/applicationService';
 
 
-// Dummy applicants data for demonstration
-const applicantsData = {
-  'Private Equity Analyst': [
-    { name: 'Amit Sharma', email: 'amit@example.com', phone: '+91-1234567890', role: 'Private Equity Analyst', appliedOn: '2025-07-10', source: 'ATS', status: 'Pending',
-      interviewHistory: [
-        { round: 'HR', date: '2025-07-15', interviewer: 'Rohit S.', feedback: 'Good communication.' },
-      ],
-      interviewer: 'Rohit S.',
-      feedback: 'Strong profile, needs technical round.'
-    },
-    { name: 'Priya Singh', email: 'priya@example.com', phone: '+91-9876543210', role: 'Private Equity Analyst', appliedOn: '2025-07-11', source: 'Career Page', status: 'Shortlisted',
-      interviewHistory: [],
-      interviewer: '',
-      feedback: ''
-    },
-  ],
-  'Hedge Fund Analyst': [
-    { name: 'Rahul Verma', email: 'rahul@example.com', phone: '+91-5555555555', role: 'Hedge Fund Analyst', appliedOn: '2025-07-12', source: 'Referral', status: 'New',
-      interviewHistory: [],
-      interviewer: '',
-      feedback: ''
-    },
-  ],
-  'Risk & Compliance Manager': [
-    { name: 'Sneha Rao', email: 'sneha@example.com', phone: '+91-4444444444', role: 'Risk & Compliance Manager', appliedOn: '2025-07-13', source: 'LinkedIn', status: 'Interviewing',
-      interviewHistory: [
-        { round: 'Technical', date: '2025-07-18', interviewer: 'Anjali M.', feedback: 'Strong technical skills.' },
-        { round: 'HR', date: '2025-07-19', interviewer: 'Vaibhav K.', feedback: 'Positive attitude.' },
-      ],
-      interviewer: 'Vaibhav K.',
-      feedback: 'Ready for final round.'
-    },
-  ],
-  'Portfolio Manager': [],
-  'Data Analyst': [
-    { name: 'Vikas Kumar', email: 'vikas@example.com', phone: '+91-2222222222', role: 'Data Analyst', appliedOn: '2025-07-14', source: 'ATS', status: 'Rejected',
-      interviewHistory: [],
-      interviewer: '',
-      feedback: ''
-    },
-    { name: 'Anjali Mehta', email: 'anjali@example.com', phone: '+91-3333333333', role: 'Data Analyst', appliedOn: '2025-07-15', source: 'Career Page', status: 'Shortlisted',
-      interviewHistory: [
-        { round: 'HR', date: '2025-07-20', interviewer: 'Ishu', feedback: 'Great fit.' },
-      ],
-      interviewer: 'Ishu',
-      feedback: 'Schedule technical round.'
-    },
-    { name: 'Suresh Patil', email: 'suresh@example.com', phone: '+91-6666666666', role: 'Data Analyst', appliedOn: '2025-07-16', source: 'Referral', status: 'Hired',
-      interviewHistory: [
-        { round: 'Technical', date: '2025-07-18', interviewer: 'Vaibhav K.', feedback: 'Excellent technical skills.' },
-        { round: 'HR', date: '2025-07-19', interviewer: 'Ishu', feedback: 'Good culture fit.' },
-      ],
-      interviewer: 'Ishu',
-      feedback: 'Offer released.'
-    },
-  ],
-};
+// // Dummy applicants data for demonstration
+// const applicantsData = {
+//   'Private Equity Analyst': [
+//     { name: 'Amit Sharma', email: 'amit@example.com', phone: '+91-1234567890', role: 'Private Equity Analyst', appliedOn: '2025-07-10', source: 'ATS', status: 'Pending',
+//       interviewHistory: [
+//         { round: 'HR', date: '2025-07-15', interviewer: 'Rohit S.', feedback: 'Good communication.' },
+//       ],
+//       interviewer: 'Rohit S.',
+//       feedback: 'Strong profile, needs technical round.'
+//     },
+//     { name: 'Priya Singh', email: 'priya@example.com', phone: '+91-9876543210', role: 'Private Equity Analyst', appliedOn: '2025-07-11', source: 'Career Page', status: 'Shortlisted',
+//       interviewHistory: [],
+//       interviewer: '',
+//       feedback: ''
+//     },
+//   ],
+//   'Hedge Fund Analyst': [
+//     { name: 'Rahul Verma', email: 'rahul@example.com', phone: '+91-5555555555', role: 'Hedge Fund Analyst', appliedOn: '2025-07-12', source: 'Referral', status: 'New',
+//       interviewHistory: [],
+//       interviewer: '',
+//       feedback: ''
+//     },
+//   ],
+//   'Risk & Compliance Manager': [
+//     { name: 'Sneha Rao', email: 'sneha@example.com', phone: '+91-4444444444', role: 'Risk & Compliance Manager', appliedOn: '2025-07-13', source: 'LinkedIn', status: 'Interviewing',
+//       interviewHistory: [
+//         { round: 'Technical', date: '2025-07-18', interviewer: 'Anjali M.', feedback: 'Strong technical skills.' },
+//         { round: 'HR', date: '2025-07-19', interviewer: 'Vaibhav K.', feedback: 'Positive attitude.' },
+//       ],
+//       interviewer: 'Vaibhav K.',
+//       feedback: 'Ready for final round.'
+//     },
+//   ],
+//   'Portfolio Manager': [],
+//   'Data Analyst': [
+//     { name: 'Vikas Kumar', email: 'vikas@example.com', phone: '+91-2222222222', role: 'Data Analyst', appliedOn: '2025-07-14', source: 'ATS', status: 'Rejected',
+//       interviewHistory: [],
+//       interviewer: '',
+//       feedback: ''
+//     },
+//     { name: 'Anjali Mehta', email: 'anjali@example.com', phone: '+91-3333333333', role: 'Data Analyst', appliedOn: '2025-07-15', source: 'Career Page', status: 'Shortlisted',
+//       interviewHistory: [
+//         { round: 'HR', date: '2025-07-20', interviewer: 'Ishu', feedback: 'Great fit.' },
+//       ],
+//       interviewer: 'Ishu',
+//       feedback: 'Schedule technical round.'
+//     },
+//     { name: 'Suresh Patil', email: 'suresh@example.com', phone: '+91-6666666666', role: 'Data Analyst', appliedOn: '2025-07-16', source: 'Referral', status: 'Hired',
+//       interviewHistory: [
+//         { round: 'Technical', date: '2025-07-18', interviewer: 'Vaibhav K.', feedback: 'Excellent technical skills.' },
+//         { round: 'HR', date: '2025-07-19', interviewer: 'Ishu', feedback: 'Good culture fit.' },
+//       ],
+//       interviewer: 'Ishu',
+//       feedback: 'Offer released.'
+//     },
+//   ],
+// };
 
 const ResumeModal = ({ candidate, onClose }) => (
   <div className="modal-overlay">
@@ -95,54 +95,54 @@ const JobApplicationsModal = ({jobId, jobTitle, onClose }) => {
 
   /// ✅ Fetch applicants from backend on load
 useEffect(() => {
-    if (!jobId) return; // prevent fetching if no jobId
+  if (!jobId) return;
 
-    const fetchApplicants = async () => {
-      try {
-        const { data } = await fetchApplicantsByJob(jobId); // ✅ uses jobId
-        setApplicants(data);
-      } catch (error) {
-        console.error('Error fetching applications:', error);
-        alert('Failed to fetch applications. Please try again.');
-      }
-    };
+  const fetchApplicants = async () => {
+    try {
+      const applicantsArray = await fetchApplicantsByJob(jobId); // ✅ now returns array
+      setApplicants(applicantsArray);
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+      alert("Failed to fetch applications. Please try again.");
+    }
+  };
 
-    fetchApplicants();
-  }, [jobId]);
+  fetchApplicants();
+}, [jobId]);
+
 
 
    // ✅ Handle round update form submission
 const handleRoundUpdate = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Collect form data
-  const formData = new FormData(e.target);
-  const roundData = {
-    round: formData.get("round"),
-    date: formData.get("date"),
-    interviewer: formData.get("interviewer"),
-    feedback: formData.get("feedback"),
-  };
+    const formData = new FormData(e.target);
+    const roundData = {
+      round: formData.get("round"),
+      date: formData.get("date"),
+      interviewer: formData.get("interviewer"),
+      feedback: formData.get("feedback"),
+    };
 
-  try {
-    // 1️⃣ Update round in backend using candidate's ID
-    await updateInterviewRound(roundUpdateFor._id, roundData);
+    try {
+      // 1️⃣ Update round in backend using applicationId
+      await updateInterviewRound(roundUpdateFor._id, roundData);
 
-    // 2️⃣ Refetch applicants for this job using jobId
-    if (jobId) {
-      const { data } = await fetchApplicantsByJob(jobId); // ✅ use jobId instead of jobTitle
-      setApplicants(data); // 3️⃣ Update state
+      // 2️⃣ Refetch applicants for this job
+      if (jobId) {
+        const { data } = await fetchApplicantsByJob(jobId);
+        setApplicants(data);
+      }
+
+      // 3️⃣ Close modal
+      setRoundUpdateFor(null);
+
+      alert("Round updated successfully!");
+    } catch (err) {
+      console.error("Failed to update round:", err);
+      alert("Error updating round. Please try again.");
     }
-
-    // 4️⃣ Close the round update modal
-    setRoundUpdateFor(null);
-
-    alert("Round updated successfully!");
-  } catch (err) {
-    console.error("Failed to update round:", err);
-    alert("Error updating round. Please try again.");
-  }
-};
+  };
 
   
   return (

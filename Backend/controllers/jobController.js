@@ -12,11 +12,12 @@ exports.createJob = async (req, res) => {
   }
 };
 
+
 // Get all jobs
 exports.getJobs = async (req, res) => {
   try {
     const jobs = await Job.find();
-    res.json(jobs);
+    res.json({ jobs }); // wrap array in object
   } catch (error) {
     console.error("❌ Error in getJobs:", error);
     res.status(500).json({ message: "Server error", error });
