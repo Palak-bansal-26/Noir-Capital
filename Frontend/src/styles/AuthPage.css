@@ -1,0 +1,391 @@
+.view-app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.08rem;
+  font-weight: 700;
+  border-radius: 1.2rem;
+  border: none;
+  background: linear-gradient(90deg, #23243a 0%, #43ea7a 100%);
+  color: #fff;
+  box-shadow: 0 2px 16px #43ea7a33, 0 1.5px 8px #23243a22;
+  cursor: pointer;
+  margin: 0.25rem 0.25rem;
+  letter-spacing: 0.03em;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.15s;
+  outline: none;
+}
+.view-app-btn:hover, .view-app-btn:focus {
+  background: linear-gradient(90deg, #43ea7a 0%, #23243a 100%);
+  color: #fff;
+  box-shadow: 0 6px 24px #43ea7a55, 0 2px 12px #23243a44;
+  transform: translateY(-2px) scale(1.04);
+  outline: none;
+}
+.hr-dashboard-table {
+  width: 100%;
+  background: #23243a;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #23243a44;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.hr-dashboard-table th {
+  font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #FFC107;
+  background: #181a20;
+  padding: 1.1rem 0.7rem;
+  border-bottom: 2px solid #23243a;
+}
+.hr-dashboard-table td {
+  font-size: 1rem;
+  color: #fff;
+  padding: 1rem 0.7rem;
+  border-bottom: 1px solid #23243a;
+}
+.hr-dashboard-table tr:nth-child(even) {
+  background: #23243a;
+}
+.hr-dashboard-table tr:hover {
+  background: #181a20;
+  transition: background 0.2s;
+}
+/* Login form input and label improvements */
+.auth-card input[type="text"],
+.auth-card input[type="email"],
+.auth-card input[type="password"],
+.auth-card input[type="tel"] {
+  width: 100%;
+  padding: 10px 14px;
+  line-height: 1.5;
+  font-size: 1rem;
+  color: #fff;
+  background: #23243a;
+  border: 1.5px solid #444;
+  border-radius: 8px;
+  margin-bottom: 1.1rem;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+.auth-card input[type="text"]:focus,
+.auth-card input[type="email"]:focus,
+.auth-card input[type="password"]:focus,
+.auth-card input[type="tel"]:focus {
+  border-color: #facc15;
+  outline: none;
+}
+.auth-card label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+  color: #d4af37;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.auth-card input::placeholder {
+  color: #bbbbbb;
+  opacity: 1;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.auth-logo {
+  height: 3.2rem;
+  width: auto;
+  margin: 0 auto 1.2rem auto;
+  filter: drop-shadow(0 2px 8px #d4af3740);
+}
+.admin-heading {
+  font-size: 1.7rem;
+  font-weight: 900;
+  text-align: center;
+  color: #FFC107;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 193, 7, 0.08);
+  border: 1.5px solid #FFC107;
+  box-shadow: 0 4px 24px #ffc10733, 0 2px 12px #0002;
+  text-shadow: 0 2px 12px #ffc10755, 0 1px 2px #0008;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.user-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: #FFC107;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 193, 7, 0.08);
+  border: 1.5px solid #FFC107;
+  box-shadow: 0 4px 24px #ffc10733, 0 2px 12px #0002;
+  text-shadow: 0 2px 12px #ffc10755, 0 1px 2px #0008;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.user-login-heading {
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.7rem;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid #fff;
+  box-shadow: 0 4px 24px #fff2, 0 2px 12px #0002;
+  text-shadow: 0 2px 12px #fff8, 0 1px 2px #0008;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+/* AuthPage.css */
+
+.auth-container {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Back Button */
+.back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #d1d5db;
+  background-color: #1c1c1c;
+  border: 1px solid #4b5563;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.back-button:hover {
+  color: #facc15;
+  border-color: #facc15;
+  background-color: #2d2d2d;
+  transform: translateY(-1px);
+}
+.back-button .icon {
+  font-size: 1.1rem;
+}
+
+/* Header + Logo */
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  height: 80px;          /* adjust logo height */
+  width: auto;           /* keep aspect ratio */
+  margin: 0 auto 1.5rem auto;
+  display: block;        /* center inside parent */
+  object-fit: contain;   /* prevent distortion */
+  border-radius: 8px;    /* optional: smooth corners */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5); /* optional: glow on dark bg */
+}
+
+
+/* Card */
+.auth-card {
+  width: 100%;
+  background-color: #1c1c1c;
+  border: 1px solid #2b2b2b;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.45);
+  color: white;
+}
+
+/* --- NEW STYLES TO FIX BUTTON COLORS --- */
+
+.view-app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 0.7rem;
+  border: none;
+  background: linear-gradient(90deg, #FFC107 0%, #ff9800 100%);
+  color: #181a20;
+  box-shadow: 0 2px 12px #ffc10733;
+  cursor: pointer;
+  margin: 0.2rem 0.2rem;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.view-app-btn:hover, .view-app-btn:focus {
+  background: linear-gradient(90deg, #ff9800 0%, #FFC107 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px #ffc10755;
+  outline: none;
+}
+
+/* Modal form improvements for round update */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.modal-content label {
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+.modal-content input[type="text"],
+.modal-content input[type="date"] {
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  border: 1.5px solid #23243a;
+  background: #181a20;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  box-shadow: 0 2px 8px #0002;
+  transition: border 0.2s;
+}
+.modal-content input[type="text"]:focus,
+.modal-content input[type="date"]:focus {
+  border-color: #FFC107;
+  outline: none;
+}
+.modal-content button[type="submit"] {
+  align-self: flex-end;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 1rem;
+  background: #43ea7a;
+  color: #181a20;
+  border: none;
+  box-shadow: 0 2px 8px #43ea7a44;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.modal-content button[type="submit"]:hover {
+  background: #2ecc71;
+}
+
+/* Reset the global button styles specifically for buttons inside the auth card */
+.auth-card button {
+  all: unset; /* This removes all inherited styles, including from the global 'button' tag */
+  box-sizing: border-box; /* 'all: unset' also removes this, so we add it back */
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease-in-out;
+}
+.auth-card input:focus {
+  border-color: #facc15;
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.4);
+  outline: none;
+}
+
+/* Submit Button */
+.auth-card form button[type="submit"] {
+  width: 100%;
+  background-color: #facc15;
+  color: #000;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.auth-card form button[type="submit"]:hover {
+  background-color: #fbbf24;
+}
+.auth-card form button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.auth-card .divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  margin: 1.5rem 0;
+}
+.auth-card .divider::before,
+.auth-card .divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #374151;
+}
+.auth-card .divider:not(:empty)::before {
+  margin-right: 0.75rem;
+}
+.auth-card .divider:not(:empty)::after {
+  margin-left: 0.75rem;
+}
+
+/* Google Button */
+.auth-card .google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: #111827;
+  color: white;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  vertical-align: middle;
+}
+.auth-card .google-btn:hover {
+  background-color: #374151;
+}
+
+/* Toggle Link (Sign Up / Sign In) */
+.auth-card p {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #9ca3af;
+}
+.auth-card p button {
+  font-weight: 600;
+  color: #facc15;
+  margin-left: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.auth-card p button:hover {
+  color: #fde047;
+}
+
+/* Footer */
+.auth-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 2rem;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

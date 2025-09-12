@@ -1,0 +1,151 @@
+.contact-wrapper {
+  background-color: #000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px 40px 20px;
+  color: white;
+}
+
+.contact-section {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  width: 100%;
+  gap: 60px;
+  background-color: #111;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #ffc107;
+  box-shadow: 0 0 20px #ffc10733;
+}
+
+.contact-text {
+  flex: 1;
+}
+
+.contact-text h2 {
+  color: #ffc107;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.contact-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.contact-details p {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.contact-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffc107;
+}
+
+.contact-form label {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background-color: #000;
+  color: white;
+  border: 1px solid #ffc107;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact-form button {
+  margin-top: 10px;
+  background-color: transparent;
+  border: 1px solid #ffc107;
+  color: #ffc107;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #ffc107;
+  color: black;
+}
+/* Animation keyframes */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-section {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+/* Larger and clearer fonts */
+.contact-text h2,
+.contact-form h2 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.contact-text p,
+.contact-details p,
+.contact-form label {
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+.contact-form input,
+.contact-form textarea {
+  font-size: 16px;
+}
+
+.contact-form button {
+  font-size: 16px;
+}
+.contact-details .highlight {
+  color: #ffc107;
+  font-weight: 600;
+  margin-right: 6px;
+  display: inline-block;
+  min-width: 70px;
+}
+
+.contact-address {
+  display: flex;
+  align-items: flex-start;
+  font-size: 20px;
+  gap: 8px; /* space between label and lines */
+}
+
+.address-lines {
+  display: flex;
+  flex-direction: column;
+}

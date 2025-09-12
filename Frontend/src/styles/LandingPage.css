@@ -1,0 +1,108 @@
+/* LandingPage.css */
+
+.landing-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.landing-logo {
+  height: 6rem;
+  width: auto;
+  margin-bottom: 1.5rem;
+}
+.landing-logo.small {
+  height: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.landing-title {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: bold;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .landing-title {
+    font-size: 3rem; /* md:text-5xl */
+  }
+}
+
+.landing-description {
+  font-size: 1.125rem; /* text-lg */
+  color: #9ca3af; /* gray-400 */
+  margin-bottom: 2.5rem;
+  max-width: 42rem; /* max-w-2xl */
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 20rem; /* max-w-xs */
+  align-items: center;
+  justify-content: center;
+}
+.portal-group {
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .button-group {
+    flex-direction: row;
+    max-width: 28rem; /* sm:max-w-md */
+  }
+}
+
+.user-button {
+  width: 100%;
+  background-color: #facc15; /* yellow-400 */
+  color: black;
+  font-weight: bold;
+  padding: 0.75rem 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-button:hover {
+  background-color: #fbbf24; /* Darker yellow on hover */
+  border-color: #fbbf24;
+  color: #121212; /* THE FIX: Ensures text stays black and visible */
+}
+
+.admin-button {
+  width: 100%;
+  background-color: transparent;
+  border: 2px solid #4b5563; /* gray-600 */
+  color: #9ca3af; /* gray-400 */
+  font-weight: bold;
+  padding: 0.75rem 2.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-button:hover {
+  background-color: #1f2937; /* gray-800 */
+  color: white;
+  border-color: #6b7280; /* gray-500 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
